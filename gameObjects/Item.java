@@ -2,8 +2,11 @@ package gameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.image.ImageObserver;
 
 /**
  * An Item is a clickable object that can be drawn and perhaps contain things. 
@@ -28,6 +31,7 @@ public class Item
     
     public String getName() { return name; }    
     public boolean pickUpOnClick() { return pickUpOnClick; }
+    public void enablePickUpOnClick() { pickUpOnClick = true; }
     public Rectangle getRect() { return rect; }
     
     public void reactToClick(Point p, Player player)
@@ -40,8 +44,16 @@ public class Item
         return rect;
     }
     
-    public void draw(Graphics g)
+    public void draw(Graphics g, ImageObserver io)
     {
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
     }
+    
+    //Make these static so that the Image only gets loaded once (not for each instance)
+    public static Image keyImage;
+    public static void loadImages(Toolkit toolkit)
+    {
+        keyImage = toolkit.getImage("src/items/images/key.gif");
+    }
+
 }

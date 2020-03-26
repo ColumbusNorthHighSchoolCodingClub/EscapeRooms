@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.ImageObserver;
 
 /**
  *
@@ -28,7 +29,7 @@ public class SimpleButton extends Item
         System.out.println("SimpleButton Clicked!");
     }
     
-    public void draw(Graphics g)
+    public void draw(Graphics g, ImageObserver io)
     {
         if(isOn)
             g.setColor(Color.GREEN);

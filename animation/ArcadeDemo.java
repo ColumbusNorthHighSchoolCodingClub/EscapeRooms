@@ -10,6 +10,7 @@ package animation;
  */
 
 
+import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
 import java.awt.Graphics;
@@ -22,6 +23,7 @@ import java.applet.AudioClip;
 import java.awt.Point;
 import java.util.ArrayList;
 import rooms.RoomOne;
+import rooms.RoomWithStuff;
 import rooms.RoomZero;
 
 
@@ -47,11 +49,17 @@ public class ArcadeDemo extends AnimationPanel
         super("Escape Room 2020", 640, 480);
         player = new Player("Demo");
         rooms = new ArrayList<>();
-        rooms.add(new RoomZero());
-        rooms.add(new RoomOne());
+        addRoomsToList();
         currentRoom = 0;
         waitMode = false;
         waitBeforeNextRoomTimer = 0;
+    }
+    
+    public void addRoomsToList()
+    {
+        rooms.add(new RoomZero());
+        rooms.add(new RoomOne());
+        rooms.add(new RoomWithStuff());
     }
        
     //The renderFrame method is the one which is called each time a frame is drawn.
@@ -66,7 +74,7 @@ public class ArcadeDemo extends AnimationPanel
         g.setColor(Color.BLACK);
         g.fillOval(mouseX-10, mouseY-10, 20,20);
         
-        rooms.get(currentRoom).draw(g);
+        rooms.get(currentRoom).draw(g,this);
         
         if (rooms.get(currentRoom).isDone() && !waitMode) 
         {   
@@ -147,6 +155,7 @@ public class ArcadeDemo extends AnimationPanel
     {      
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         
+        Item.loadImages(toolkit);
 //        ballImage = toolkit.getImage("ball.gif");
 //        starImage = toolkit.getImage("star.gif");
     } //--end of initGraphics()--
