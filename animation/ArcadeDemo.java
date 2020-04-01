@@ -1,6 +1,5 @@
 package animation;
 
-
 /**
  * Class ArcadeDemo
  * This class contains demos of many of the things you might
@@ -8,7 +7,6 @@ package animation;
  * 
  * Adapted from the AppletAE demo from years past. 
  */
-
 
 import gameObjects.Item;
 import gameObjects.Player;
@@ -61,8 +59,9 @@ public class ArcadeDemo extends AnimationPanel
     {
         rooms.add(new RoomZero());
         rooms.add(new MultiButtonRoom());
-        rooms.add(new RoomOne());
+        rooms.add(new MultiButtonRoom());
         rooms.add(new RoomWithStuff());
+        rooms.add(new RoomOne());
     }
        
     //The renderFrame method is the one which is called each time a frame is drawn.
