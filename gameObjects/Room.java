@@ -2,6 +2,7 @@ package gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
 /**
@@ -55,10 +56,10 @@ public class Room
         return "Click on the door";
     }
     
-    public void draw(Graphics g)
+    public void draw(Graphics g, ImageObserver io)
     {
         for(Item i : items)
-            i.draw(g);
+            i.draw(g,io);
     }
        
     public Item getItemByName(String s)
