@@ -41,6 +41,8 @@ public class ArcadeDemo extends AnimationPanel
     
     private boolean waitMode;
     private int waitBeforeNextRoomTimer;
+    private int totalTime;
+    private int roomTime;
 
     //Constructor
     //-------------------------------------------------------
@@ -54,6 +56,8 @@ public class ArcadeDemo extends AnimationPanel
         
         waitMode = false;
         waitBeforeNextRoomTimer = 0;
+        totalTime=0;
+        roomTime=0;
     }
     
     public void addRoomsToList()
@@ -97,7 +101,10 @@ public class ArcadeDemo extends AnimationPanel
             {
                 waitMode = false;
                 if(currentRoom < rooms.size()-1)
+                {
                     currentRoom++;
+                    roomTime=0;
+                }
                 else
                     System.out.println("You Have Escaped ALL the rooms!");
             }
@@ -108,7 +115,10 @@ public class ArcadeDemo extends AnimationPanel
         g.setColor(Color.BLACK);
         g.drawString("CurrentRoom = "+currentRoom, 10, 12);
         g.drawString("f#"+frameNumber, 150, 12);
-        
+        g.drawString("Total Time: "+totalTime/60, 500, 20);
+        g.drawString("Room Time: "+roomTime/60, 500, 32);
+        roomTime++;
+        totalTime++;
         return g;
     }//--end of renderFrame method--
     
