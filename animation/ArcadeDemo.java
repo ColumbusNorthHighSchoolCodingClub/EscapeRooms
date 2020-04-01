@@ -22,6 +22,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import rooms.MultiButtonRoom;
 import rooms.RoomOne;
+import rooms.RoomTwo;
 import rooms.RoomWithStuff;
 import rooms.RoomZero;
 
@@ -57,11 +58,13 @@ public class ArcadeDemo extends AnimationPanel
     
     public void addRoomsToList()
     {
+        rooms.add(new RoomTwo());
         rooms.add(new RoomZero());
         rooms.add(new MultiButtonRoom());
         rooms.add(new MultiButtonRoom());
         rooms.add(new RoomWithStuff());
         rooms.add(new RoomOne());
+        
     }
        
     //The renderFrame method is the one which is called each time a frame is drawn.
@@ -124,7 +127,7 @@ public class ArcadeDemo extends AnimationPanel
     public void keyTyped(KeyEvent e) 
     {
         char c = e.getKeyChar();
-
+        rooms.get(currentRoom).onKey(c, player);
     }
     
     public void keyPressed(KeyEvent e)

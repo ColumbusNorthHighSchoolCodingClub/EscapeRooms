@@ -54,5 +54,7 @@ public class Item
     {
         keyImage = toolkit.getImage("src/items/images/key.gif");
     }
-
+    public void reactToKey(char c, Player player) {
+       System.out.println("A key was pressed, but the Item has not overriden the reactToKey method");
+    } 
 }

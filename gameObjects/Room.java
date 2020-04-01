@@ -46,6 +46,15 @@ public class Room
         }
     }
     
+    public void onKey(char c, Player player)
+    {
+        for(int index=0; index<items.size(); index++)
+        {
+            Item i = items.get(index);
+                i.reactToKey(c,player);
+        }
+    }
+    
     public boolean isDone()
     {
         return false;
