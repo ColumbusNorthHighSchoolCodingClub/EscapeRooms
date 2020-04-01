@@ -23,5 +23,12 @@ public class Player
     public void addItem(Item i) { items.add(i); }
     public int getScore() { return score; }
     
+    public boolean hasItem(String itemName)
+    {
+        for(Item i : items)
+            if(i.getName().equals(itemName))
+                return true;
+        return false;
+    }
     
 }
