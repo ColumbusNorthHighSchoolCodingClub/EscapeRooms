@@ -46,6 +46,21 @@ public class Room
         }
     }
     
+    public void onDrag(Point p, Player player) {
+        for(int index=0; index<items.size(); index++)
+        {
+            Item i = items.get(index);
+                i.reactToDrag(p,player);
+        }
+    }
+    public void onMouseRelease(Point p, Player player) {
+        for(int index=0; index<items.size(); index++)
+        {
+            Item i = items.get(index);
+                i.reactToMouseRelease(p,player);
+        }
+    }
+    
     public void onKey(char c, Player player)
     {
         for(int index=0; index<items.size(); index++)

@@ -38,6 +38,15 @@ public class Item
         System.out.println("A click occured, but the Item has not overriden the reactToClick method");
     }
     
+    public void reactToDrag(Point p, Player player)
+    {
+        System.out.println("A drag occured, but the Item has not overriden the reactToDrag method");
+    }
+    public void reactToMouseRelease(Point p, Player player)
+    {
+        System.out.println("A mouse release occured, but the Item has not overriden the reactToRelease method");
+    }
+    
     public Rectangle getHitBox()
     {
         return rect;
