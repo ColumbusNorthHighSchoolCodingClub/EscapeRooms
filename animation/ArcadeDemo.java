@@ -1,14 +1,5 @@
 package animation;
 
-import java.applet.AudioClip;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 /**
  * Class ArcadeDemo
@@ -18,14 +9,20 @@ import java.util.ArrayList;
  * Adapted from the AppletAE demo from years past. 
  */
 
+
 import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
-import rooms.MultiButtonRoom;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
+import java.applet.AudioClip;   
+import java.awt.Point;
+import java.util.ArrayList;
 import rooms.RoomOne;
-import rooms.RoomThree;
-//import rooms.RoomThree;
-import rooms.RoomTwo;
 import rooms.RoomWithStuff;
 import rooms.RoomZero;
 
@@ -44,8 +41,6 @@ public class ArcadeDemo extends AnimationPanel
     
     private boolean waitMode;
     private int waitBeforeNextRoomTimer;
-    private int totalTime;
-    private int roomTime;
 
     //Constructor
     //-------------------------------------------------------
@@ -56,23 +51,15 @@ public class ArcadeDemo extends AnimationPanel
         rooms = new ArrayList<>();
         addRoomsToList();
         currentRoom = 0;
-        
         waitMode = false;
         waitBeforeNextRoomTimer = 0;
-        totalTime=0;
-        roomTime=0;
     }
     
     public void addRoomsToList()
     {
-    	rooms.add(new RoomThree());
-        rooms.add(new RoomTwo());
         rooms.add(new RoomZero());
-        rooms.add(new MultiButtonRoom());
-        rooms.add(new MultiButtonRoom());
-        rooms.add(new RoomWithStuff());
         rooms.add(new RoomOne());
-        
+        rooms.add(new RoomWithStuff());
     }
        
     //The renderFrame method is the one which is called each time a frame is drawn.
@@ -80,8 +67,8 @@ public class ArcadeDemo extends AnimationPanel
     protected Graphics renderFrame(Graphics g) 
     {
         //Draw a square that is stationary on the screen.
-       // g.setColor(Color.BLUE);
-        //g.fillRect(220,120,50,50);
+        g.setColor(Color.BLUE);
+        g.fillRect(220,120,50,50);
         
         //Draw a circle that follows the mouse.
         g.setColor(Color.BLACK);
@@ -105,10 +92,7 @@ public class ArcadeDemo extends AnimationPanel
             {
                 waitMode = false;
                 if(currentRoom < rooms.size()-1)
-                {
                     currentRoom++;
-                    roomTime=0;
-                }
                 else
                     System.out.println("You Have Escaped ALL the rooms!");
             }
@@ -119,10 +103,7 @@ public class ArcadeDemo extends AnimationPanel
         g.setColor(Color.BLACK);
         g.drawString("CurrentRoom = "+currentRoom, 10, 12);
         g.drawString("f#"+frameNumber, 150, 12);
-        g.drawString("Total Time: "+totalTime/60, 500, 20);
-        g.drawString("Room Time: "+roomTime/60, 500, 32);
-        roomTime++;
-        totalTime++;
+        
         return g;
     }//--end of renderFrame method--
     
@@ -133,19 +114,6 @@ public class ArcadeDemo extends AnimationPanel
     { 
         Point clickPoint = e.getPoint();
         rooms.get(currentRoom).onClick(clickPoint, player);
-        rooms.get(currentRoom).onClickGeneric(clickPoint, player);
-    }
-    public void mouseDragged(MouseEvent e) 
-    {
-    	Point clickPoint = e.getPoint();
-        rooms.get(currentRoom).onDrag(clickPoint, player);
-    	
-    }
-    public void mouseReleased(MouseEvent e) 
-    {
-    	Point clickPoint = e.getPoint();
-        rooms.get(currentRoom).onMouseRelease(clickPoint, player);
-    	
     }
     
     //-------------------------------------------------------
@@ -154,7 +122,7 @@ public class ArcadeDemo extends AnimationPanel
     public void keyTyped(KeyEvent e) 
     {
         char c = e.getKeyChar();
-        rooms.get(currentRoom).onKey(c, player);
+
     }
     
     public void keyPressed(KeyEvent e)
