@@ -21,6 +21,7 @@ public class Key extends Item
         super("Key", new Rectangle(loc.x, loc.y, 30, 30));
         enablePickUpOnClick();
     }
+    //super is when you extend a class,
         
     public void draw(Graphics g, ImageObserver io)
     {

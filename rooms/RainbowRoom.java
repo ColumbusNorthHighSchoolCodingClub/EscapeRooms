@@ -4,24 +4,28 @@ import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
 import items.BasicDoor;
+import items.ColoredButton;
 import items.NamedButton;
+import java.awt.Color;
 import java.awt.Point;
 
 /**
  *
  * @author spockm
  */
-public class MultiButtonRoom extends Room
+public class RainbowRoom extends Room
 {
     String sequence = ""; //The sequence of buttons that have been pressed.  
     
-    public MultiButtonRoom()
+    public RainbowRoom()
     {
         super();
-        this.addItem(new NamedButton("O","O",new Point(100,100)));
-        this.addItem(new NamedButton("P","P",new Point(130,100)));
-        this.addItem(new NamedButton("E","E",new Point(160,100)));
-        this.addItem(new NamedButton("N","N",new Point(190,100)));
+        this.addItem(new ColoredButton("purple",Color.MAGENTA, new Point(100,100)));
+        this.addItem(new ColoredButton("orange",Color.ORANGE, new Point(130,100)));
+        this.addItem(new ColoredButton("green", Color.GREEN, new Point(160,100)));
+        this.addItem(new ColoredButton("yellow", Color.YELLOW, new Point(190,100)));
+        this.addItem(new ColoredButton("red",Color.RED, new Point(220,100)));
+        this.addItem(new ColoredButton("blue",Color.BLUE, new Point(250,100)));
         this.addItem(new BasicDoor());
    }
 
@@ -35,24 +39,23 @@ public class MultiButtonRoom extends Room
             {
                 if(i instanceof BasicDoor)
                 {
-                    if(sequence.equals("OPEN"))
+                    if(sequence.equals("redorangeyellowgreenbluepurple"))
                          i.reactToClick(p,player);
                 }                  
-                else if(i instanceof NamedButton)//all other objects, in this case only the buttons
+                else if(i instanceof ColoredButton)//all other objects, in this case only the buttons
                 {
-                    if(((NamedButton)i).getName().equals("O"))
-                        sequence = "O"; //Restart the sequence when O is typed.
+                    if(((ColoredButton)i).getName().equals("red"))
+                        sequence = "red"; //Restart the sequence when red is clicked.
                     else
-                        sequence += ((NamedButton)i).getName();
+                        sequence += ((ColoredButton)i).getName();
                     
                     i.reactToClick(p,player);
                 }                
             }
         }
     }
-
-
     
+
     public boolean isDone()
     {
         return ((BasicDoor)getItemByName("BasicDoor")).isOpen();   

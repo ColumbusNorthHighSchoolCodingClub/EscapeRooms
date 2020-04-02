@@ -1,5 +1,6 @@
 package gameObjects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -38,20 +39,6 @@ public class Item
         System.out.println("A click occured, but the Item has not overriden the reactToClick method");
     }
     
-    public void reactToClickGeneric(Point p, Player player)
-    {
-        System.out.println("A click occured, but the Item has not overriden the reactToClick method");
-    }
-    
-    public void reactToDrag(Point p, Player player)
-    {
-        System.out.println("A drag occured, but the Item has not overriden the reactToDrag method");
-    }
-    public void reactToMouseRelease(Point p, Player player)
-    {
-        System.out.println("A mouse release occured, but the Item has not overriden the reactToRelease method");
-    }
-    
     public Rectangle getHitBox()
     {
         return rect;
@@ -64,11 +51,10 @@ public class Item
     
     //Make these static so that the Image only gets loaded once (not for each instance)
     public static Image keyImage;
+    //public static Image starImage;
     public static void loadImages(Toolkit toolkit)
     {
+       // starImage = toolkit.getImage("src/items/images/star.png");
         keyImage = toolkit.getImage("src/items/images/key.gif");
     }
-    public void reactToKey(char c, Player player) {
-       System.out.println("A key was pressed, but the Item has not overriden the reactToKey method");
-    } 
 }

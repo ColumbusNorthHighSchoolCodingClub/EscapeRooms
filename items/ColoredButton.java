@@ -12,15 +12,17 @@ import java.awt.image.ImageObserver;
  * When a screen has multiple Buttons, it would be useful to name them.  
  * @author spockm
  */
-public class NamedButton extends Item
+public class ColoredButton extends Item
 {
     private String textOnButton;
+    private Color color;
     private boolean isOn = false;
     
-    public NamedButton(String n, String text, Point loc)
+    public ColoredButton(String n, Color inputColor, Point loc)
     {
         super(n, new Rectangle(loc.x, loc.y, 20,20));
-        textOnButton = text;
+        color=inputColor;
+        //textOnButton = text;
     }
     
     public boolean isOn() { return isOn; }
@@ -28,18 +30,21 @@ public class NamedButton extends Item
     public void reactToClick(Point p, Player player)
     {
         isOn = !isOn;
-        System.out.println("NamedButton "+getName()+" Clicked!");
+        System.out.println("ColoredButton "+getName()+" Clicked!");
     }
     
     public void draw(Graphics g, ImageObserver io)
     {
         if(isOn)
-            g.setColor(Color.GREEN);
+            g.setColor(Color.BLACK);
+        //will set the color to green if it is activated
         else
-            g.setColor(Color.RED);
+            g.setColor(color);
+        //if it is not activated, it will be the rainbow color
         g.fillRect(getRect().x, getRect().y, getRect().width, getRect().height);
-        g.setColor(Color.BLACK); //draw the text onto the button
-        g.drawString(textOnButton, getRect().x, getRect().y);
+//        g.setColor(Color.BLACK); //draw the text onto the button
+//        g.drawString(textOnButton, getRect().x, getRect().y);
+        //dont need any more text drawing
     }
     
 }

@@ -1,14 +1,5 @@
 package animation;
 
-import java.applet.AudioClip;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 /**
  * Class ArcadeDemo
@@ -18,16 +9,24 @@ import java.util.ArrayList;
  * Adapted from the AppletAE demo from years past. 
  */
 
+
 import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
-import rooms.MultiButtonRoom;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
+import java.applet.AudioClip;   
+import java.awt.Point;
+import java.util.ArrayList;
+import rooms.RainbowRoom;
 import rooms.RoomOne;
-import rooms.RoomThree;
-//import rooms.RoomThree;
-import rooms.RoomTwo;
 import rooms.RoomWithStuff;
 import rooms.RoomZero;
+import rooms.StarRoom;
 
 
 public class ArcadeDemo extends AnimationPanel 
@@ -54,21 +53,17 @@ public class ArcadeDemo extends AnimationPanel
         rooms = new ArrayList<>();
         addRoomsToList();
         currentRoom = 0;
-        
         waitMode = false;
         waitBeforeNextRoomTimer = 0;
     }
     
     public void addRoomsToList()
     {
-    	rooms.add(new RoomThree());
-        rooms.add(new RoomTwo());
+       // rooms.add(new StarRoom());
         rooms.add(new RoomZero());
-        rooms.add(new MultiButtonRoom());
-        rooms.add(new MultiButtonRoom());
-        rooms.add(new RoomWithStuff());
+        rooms.add(new RainbowRoom());
         rooms.add(new RoomOne());
-        
+        rooms.add(new RoomWithStuff());
     }
        
     //The renderFrame method is the one which is called each time a frame is drawn.
@@ -76,8 +71,8 @@ public class ArcadeDemo extends AnimationPanel
     protected Graphics renderFrame(Graphics g) 
     {
         //Draw a square that is stationary on the screen.
-       // g.setColor(Color.BLUE);
-        //g.fillRect(220,120,50,50);
+//        g.setColor(Color.BLUE);
+//        g.fillRect(220,120,50,50);
         
         //Draw a circle that follows the mouse.
         g.setColor(Color.BLACK);
@@ -123,19 +118,6 @@ public class ArcadeDemo extends AnimationPanel
     { 
         Point clickPoint = e.getPoint();
         rooms.get(currentRoom).onClick(clickPoint, player);
-        rooms.get(currentRoom).onClickGeneric(clickPoint, player);
-    }
-    public void mouseDragged(MouseEvent e) 
-    {
-    	Point clickPoint = e.getPoint();
-        rooms.get(currentRoom).onDrag(clickPoint, player);
-    	
-    }
-    public void mouseReleased(MouseEvent e) 
-    {
-    	Point clickPoint = e.getPoint();
-        rooms.get(currentRoom).onMouseRelease(clickPoint, player);
-    	
     }
     
     //-------------------------------------------------------
@@ -144,7 +126,7 @@ public class ArcadeDemo extends AnimationPanel
     public void keyTyped(KeyEvent e) 
     {
         char c = e.getKeyChar();
-        rooms.get(currentRoom).onKey(c, player);
+
     }
     
     public void keyPressed(KeyEvent e)
