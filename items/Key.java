@@ -28,5 +28,4 @@ public class Key extends Item
 //        g.fillRect(getRect().x, getRect().y, getRect().width, getRect().height);
         g.drawImage(keyImage, getRect().x, getRect().y, io);
     }
-    
 }
