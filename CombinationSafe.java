@@ -22,7 +22,7 @@ import java.awt.image.ImageObserver;
 
 /**
  *
- * @author spockm
+ * @author dlpre
  */
 public class CombinationSafe extends Item
 {
