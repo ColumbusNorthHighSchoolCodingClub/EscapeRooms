@@ -45,6 +45,13 @@ public class Room
             }
         }
     }
+    public void onClickGeneric(Point p, Player player) {
+        for(int index=0; index<items.size(); index++)
+        {
+            Item i = items.get(index);
+                i.reactToClickGeneric(p,player);
+        }
+    }
     
     public void onDrag(Point p, Player player) {
         for(int index=0; index<items.size(); index++)

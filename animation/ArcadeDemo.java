@@ -23,6 +23,7 @@ import gameObjects.Player;
 import gameObjects.Room;
 import rooms.MultiButtonRoom;
 import rooms.RoomOne;
+import rooms.RoomThree;
 //import rooms.RoomThree;
 import rooms.RoomTwo;
 import rooms.RoomWithStuff;
@@ -60,7 +61,7 @@ public class ArcadeDemo extends AnimationPanel
     
     public void addRoomsToList()
     {
-    	//rooms.add(new RoomThree());
+    	rooms.add(new RoomThree());
         rooms.add(new RoomTwo());
         rooms.add(new RoomZero());
         rooms.add(new MultiButtonRoom());
@@ -122,6 +123,7 @@ public class ArcadeDemo extends AnimationPanel
     { 
         Point clickPoint = e.getPoint();
         rooms.get(currentRoom).onClick(clickPoint, player);
+        rooms.get(currentRoom).onClickGeneric(clickPoint, player);
     }
     public void mouseDragged(MouseEvent e) 
     {
