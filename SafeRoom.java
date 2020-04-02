@@ -8,10 +8,10 @@ import items.Paper;
 
 
 /**
- * This is the room you appear in at the start.  
- * All you have to do is click the door.  
- * @author spockm
- */
+ *   
+ *   
+ * @author dlpre
+ *
 public class SafeRoom extends Room
 {
     public SafeRoom()
