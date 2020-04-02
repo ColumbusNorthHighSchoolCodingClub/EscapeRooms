@@ -24,6 +24,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import rooms.MultiButtonRoom;
 import rooms.RoomOne;
+import rooms.RoomSearch;
 import rooms.RoomWithStuff;
 import rooms.RoomZero;
 
@@ -59,6 +60,7 @@ public class ArcadeDemo extends AnimationPanel
     
     public void addRoomsToList()
     {
+        rooms.add(new RoomSearch());
         rooms.add(new RoomZero());
         rooms.add(new MultiButtonRoom());
         rooms.add(new RoomOne());

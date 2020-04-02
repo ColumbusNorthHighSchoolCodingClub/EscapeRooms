@@ -50,9 +50,15 @@ public class Item
     
     //Make these static so that the Image only gets loaded once (not for each instance)
     public static Image keyImage;
+    public static Image starImage;
+    public static Image donutImage;
+    public static Image smileImage;
     public static void loadImages(Toolkit toolkit)
     {
         keyImage = toolkit.getImage("src/items/images/key.gif");
+        starImage = toolkit.getImage("src/items/images/star.gif");
+        donutImage = toolkit.getImage("src/items/images/donuts.gif");
+        smileImage = toolkit.getImage("src/items/images/smile.gif");
     }
 
 }
