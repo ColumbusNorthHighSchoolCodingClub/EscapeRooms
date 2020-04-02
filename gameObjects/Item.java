@@ -38,6 +38,20 @@ public class Item
         System.out.println("A click occured, but the Item has not overriden the reactToClick method");
     }
     
+    public void reactToClickGeneric(Point p, Player player)
+    {
+        System.out.println("A click occured, but the Item has not overriden the reactToClick method");
+    }
+    
+    public void reactToDrag(Point p, Player player)
+    {
+        System.out.println("A drag occured, but the Item has not overriden the reactToDrag method");
+    }
+    public void reactToMouseRelease(Point p, Player player)
+    {
+        System.out.println("A mouse release occured, but the Item has not overriden the reactToRelease method");
+    }
+    
     public Rectangle getHitBox()
     {
         return rect;
@@ -60,5 +74,7 @@ public class Item
         donutImage = toolkit.getImage("src/items/images/donuts.gif");
         smileImage = toolkit.getImage("src/items/images/smile.gif");
     }
-
+    public void reactToKey(char c, Player player) {
+       System.out.println("A key was pressed, but the Item has not overriden the reactToKey method");
+    } 
 }

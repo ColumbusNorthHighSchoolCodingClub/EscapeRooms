@@ -8,7 +8,7 @@ import items.NamedButton;
 import java.awt.Point;
 
 /**
- *
+ * To solve this room you must press the Buttons in the order O-P-E-N
  * @author spockm
  */
 public class MultiButtonRoom extends Room
@@ -18,10 +18,10 @@ public class MultiButtonRoom extends Room
     public MultiButtonRoom()
     {
         super();
-        this.addItem(new NamedButton("O","O",new Point(100,100)));
-        this.addItem(new NamedButton("P","P",new Point(130,100)));
-        this.addItem(new NamedButton("E","E",new Point(160,100)));
-        this.addItem(new NamedButton("N","N",new Point(190,100)));
+        this.addItem(new NamedButton("E","E",new Point(100,100)));
+        this.addItem(new NamedButton("N","N",new Point(130,100)));
+        this.addItem(new NamedButton("O","O",new Point(160,100)));
+        this.addItem(new NamedButton("P","P",new Point(190,100)));
         this.addItem(new BasicDoor());
    }
 
@@ -50,8 +50,6 @@ public class MultiButtonRoom extends Room
             }
         }
     }
-
-
     
     public boolean isDone()
     {
