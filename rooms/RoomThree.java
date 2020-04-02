@@ -34,7 +34,7 @@ public class RoomThree extends Room {
 		r.add(new Rectangle(11, 230, 69, 209));
 		r.add(new Rectangle(150, 230, 69, 209));
 
-		this.addItem(new RushHourPuzzle(r, new Point(11, 160)));
+		this.addItem(new RushHourPuzzle(r, 11));
 	}
 
 	public boolean isDone() {

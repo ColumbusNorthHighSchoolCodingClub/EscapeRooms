@@ -109,10 +109,10 @@ public class RushHourPuzzle extends Item {
 
 	}
 
-	public RushHourPuzzle(ArrayList<Rectangle> blocks, Point keyBlock) {
+	public RushHourPuzzle(ArrayList<Rectangle> blocks, int keyBlockX) {
 		super("RushHourPuzzle", new Rectangle(500, 200, 20, 20));
 		reset = new Rectangle(460, 270, 110, 55);
-		Rectangle theKey = new Rectangle(keyBlock.x, keyBlock.y, 139, 69);
+		Rectangle theKey = new Rectangle(keyBlockX, 160, 139, 69);
 
 		initialOrientation = new ArrayList<Rectangle>();
 		for (Rectangle b : blocks) {
