@@ -27,6 +27,7 @@ import gameObjects.TextBox;
 import rooms.ColorRoom1;
 import rooms.CustomRoom;
 import rooms.KamiRoomOne;
+import rooms.KamiRoomTwo;
 import rooms.MultiButtonRoom;
 import rooms.RainbowRoom;
 import rooms.RoomOne;
@@ -92,6 +93,7 @@ public class ArcadeDemo extends AnimationPanel {
 		rooms.add(new MultiButtonRoom());
 		rooms.add(new RoomWithStuff());
 		rooms.add(new KamiRoomOne());
+		rooms.add(new KamiRoomTwo());
 		rooms.add(new RoomOne());
 
 	}
