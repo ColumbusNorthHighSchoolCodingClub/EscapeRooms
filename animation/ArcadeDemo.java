@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
+import rooms.KamiRoomOne;
 import rooms.MultiButtonRoom;
 import rooms.RoomOne;
 import rooms.RoomThree;
@@ -65,6 +66,7 @@ public class ArcadeDemo extends AnimationPanel
     
     public void addRoomsToList()
     {
+    	rooms.add(new KamiRoomOne());
     	rooms.add(new RoomThree());
         rooms.add(new RoomTwo());
         rooms.add(new RoomZero());

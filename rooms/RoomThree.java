@@ -49,7 +49,25 @@ public class RoomThree extends Room {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 1000, 1000);
 		g.setColor(Color.white);
+		Font stringFont2 = new Font("SansSerif", Font.PLAIN, 11);
+	
+		
+		if (((RushHourPuzzle) getItemByName("RushHourPuzzle")).getKeyBounds().intersects(door)) {
+			g.setColor(Color.black);
+			g.fillRect(0, 0, 1000, 1000);
 
+			g.setColor(Color.white);
+			g.setFont(new Font("SansSerif", Font.PLAIN, 50));
+			g.drawString("YOU ESCAPED", 140, 240);
+		}
+
+		g.setColor(Color.black);
+		g.setFont(stringFont2); // set font size back to default
+		
+		
+		
+		
+		
 		
 		 }
 
