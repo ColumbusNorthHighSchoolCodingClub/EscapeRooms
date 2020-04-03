@@ -8,7 +8,12 @@ package animation;
  * @author Travis Rother 
  * @version 2-25-2008
  */
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JFrame;
 
 public class ArcadeRunner 
@@ -24,16 +29,28 @@ public class ArcadeRunner
     //==============================================================================
     
     JFrame myFrame;
-
-    public ArcadeRunner() 
+    public static Font customFont;
+    public ArcadeRunner()
     {
         myFrame = new JFrame();
+        try {
+            //create the font to use. Specify the size!
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/items/images/Squarified.ttf")).deriveFont(24f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            //register the font
+            ge.registerFont(customFont);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(FontFormatException e) {
+            e.printStackTrace();
+        }
         myFrame.addWindowListener(new Closer());
         addFrameComponents();
         startAnimation();
         myFrame.setSize(world.getPreferredSize());
         myFrame.setVisible(true);
     }
+
 
     public void addFrameComponents() 
     {
