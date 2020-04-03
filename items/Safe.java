@@ -3,6 +3,7 @@ package items;
 import animation.ArcadeDemo;
 import gameObjects.Item;
 import gameObjects.Player;
+import gameObjects.Room;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -13,13 +14,19 @@ import java.awt.image.ImageObserver;
  *
  * @author spockm
  */
-public class LockedDoor extends Item
+public class Safe extends Item
 {
     boolean isOpen = false;
     boolean locked = true;
-    public LockedDoor()
+    Room room;
+    Item item;
+    Point loc;
+    public Safe(Room rm,Point pt,Item i)
     {
-        super("LockedDoor", new Rectangle(310-70,440-275,140,275),null);
+        super("Safe", new Rectangle(pt.x,pt.y,72,72),null);
+        room=rm;
+        item=i;
+        loc = pt;
     }
     
     public boolean isOpen() { return isOpen; }
@@ -27,26 +34,25 @@ public class LockedDoor extends Item
     public void reactToClick(Point p, Player player)
     {
         if(!locked) {
+            if(!isOpen) {
+                room.addItem(item);
+            }
             isOpen=true;
-        }
-        if(player.hasItemActive("Key"))
-        {
-            if(locked)
-                ArcadeDemo.textBox.openBox("Unlocked a LockedDoor!",true);
-            locked=false;
-        } else {
-            ArcadeDemo.textBox.openBox("The door is locked!",true);
-        }
+        } else
+            ArcadeDemo.textBox.openBox("The Safe is locked!",true);
+        
     }
-    
+    public void unlock() {
+        locked=false;
+    }
     public void draw(Graphics g, ImageObserver io)
     {
         if(!isOpen)
         {
-            g.drawImage(doorClosedImage, getRect().x, getRect().y, io);
+            g.drawImage(safeClosedImage, getRect().x, getRect().y, io);
             //super.draw(g,io);
         } else {
-            g.drawImage(doorOpenImage, getRect().x, getRect().y, io);
+            g.drawImage(safeOpenImage, getRect().x, getRect().y, io);
         }
     }
 }

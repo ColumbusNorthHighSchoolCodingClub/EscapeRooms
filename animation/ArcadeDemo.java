@@ -1,14 +1,5 @@
 package animation;
 
-import java.applet.AudioClip;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 /**
  * Class ArcadeDemo
@@ -18,16 +9,21 @@ import java.util.ArrayList;
  * Adapted from the AppletAE demo from years past. 
  */
 
+
 import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
-import rooms.MultiButtonRoom;
-import rooms.RoomOne;
-import rooms.RoomThree;
-//import rooms.RoomThree;
-import rooms.RoomTwo;
-import rooms.RoomWithStuff;
-import rooms.RoomZero;
+import gameObjects.TextBox;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
+import java.applet.AudioClip;   
+import java.awt.Point;
+import java.util.ArrayList;
+import rooms.CustomRoom;
 
 
 public class ArcadeDemo extends AnimationPanel 
@@ -41,11 +37,10 @@ public class ArcadeDemo extends AnimationPanel
     private Player player; 
     private ArrayList<Room> rooms;
     private int currentRoom; 
-    
+    public static TextBox textBox;
     private boolean waitMode;
     private int waitBeforeNextRoomTimer;
-    private int totalTime;
-    private int roomTime;
+    private boolean done;
 
     //Constructor
     //-------------------------------------------------------
@@ -56,73 +51,63 @@ public class ArcadeDemo extends AnimationPanel
         rooms = new ArrayList<>();
         addRoomsToList();
         currentRoom = 0;
-        
+        done = false;
         waitMode = false;
         waitBeforeNextRoomTimer = 0;
-        totalTime=0;
-        roomTime=0;
+        textBox=new TextBox();
     }
     
     public void addRoomsToList()
     {
-    	rooms.add(new RoomThree());
-        rooms.add(new RoomTwo());
-        rooms.add(new RoomZero());
-        rooms.add(new MultiButtonRoom());
-        rooms.add(new MultiButtonRoom());
-        rooms.add(new RoomWithStuff());
-        rooms.add(new RoomOne());
-        
+        rooms.add(new CustomRoom());
     }
        
     //The renderFrame method is the one which is called each time a frame is drawn.
     //-------------------------------------------------------
     protected Graphics renderFrame(Graphics g) 
     {
-        //Draw a square that is stationary on the screen.
-       // g.setColor(Color.BLUE);
-        //g.fillRect(220,120,50,50);
-        
-        //Draw a circle that follows the mouse.
-        g.setColor(Color.BLACK);
-        g.fillOval(mouseX-10, mouseY-10, 20,20);
+        g.drawString("( " + mouseX + " , " + mouseY + " )", 200,10);
+        //g.fillOval(mouseX-10, mouseY-10, 20,20);
         
         rooms.get(currentRoom).draw(g,this);
         
-        if (rooms.get(currentRoom).isDone() && !waitMode) 
+        if (rooms.get(currentRoom).isDone() && !waitMode&&!done) 
         {   
+            textBox.openBox("You Have Escaped!",false);
             waitMode = true;
-            waitBeforeNextRoomTimer = 200;
+            waitBeforeNextRoomTimer = 100;
         }
+        
         if(waitMode)
         {
             if(waitBeforeNextRoomTimer > 0)
             {
                 waitBeforeNextRoomTimer--;
-                g.drawString("You Have Escaped!", 250, 150);
+                //g.setFont(ArcadeRunner.customFont);
+                //g.drawString("You Have Escaped!", 250, 150);
+                
             }
             else
             {
+                textBox.closeBox();
                 waitMode = false;
                 if(currentRoom < rooms.size()-1)
-                {
                     currentRoom++;
-                    roomTime=0;
+                else {
+                    done = true;
+                    textBox.openBox("You Have Escaped ALL the rooms!",false);
                 }
-                else
-                    System.out.println("You Have Escaped ALL the rooms!");
             }
             
         }
-        
+        textBox.draw(g, this);
+        player.drawInventory(g, this);
         //General Text (Draw this last to make sure it's on top.)
         g.setColor(Color.BLACK);
-        g.drawString("CurrentRoom = "+currentRoom, 10, 12);
-        g.drawString("f#"+frameNumber, 150, 12);
-        g.drawString("Total Time: "+totalTime/60, 500, 20);
-        g.drawString("Room Time: "+roomTime/60, 500, 32);
-        roomTime++;
-        totalTime++;
+        g.setFont(ArcadeRunner.customFont);
+        g.drawString("CurrentRoom = "+currentRoom, 10, 20);
+        //g.drawString("f#"+frameNumber, 150, 12);
+        
         return g;
     }//--end of renderFrame method--
     
@@ -132,20 +117,12 @@ public class ArcadeDemo extends AnimationPanel
     public void mouseClicked(MouseEvent e)  
     { 
         Point clickPoint = e.getPoint();
-        rooms.get(currentRoom).onClick(clickPoint, player);
-        rooms.get(currentRoom).onClickGeneric(clickPoint, player);
-    }
-    public void mouseDragged(MouseEvent e) 
-    {
-    	Point clickPoint = e.getPoint();
-        rooms.get(currentRoom).onDrag(clickPoint, player);
-    	
-    }
-    public void mouseReleased(MouseEvent e) 
-    {
-    	Point clickPoint = e.getPoint();
-        rooms.get(currentRoom).onMouseRelease(clickPoint, player);
-    	
+        if(textBox.shouldClose()&&textBox.isOpen()) {
+            textBox.closeBox();
+        } else {
+            rooms.get(currentRoom).onClick(clickPoint, player);
+            player.onClick(mouseX, mouseY);
+        }
     }
     
     //-------------------------------------------------------
@@ -154,7 +131,7 @@ public class ArcadeDemo extends AnimationPanel
     public void keyTyped(KeyEvent e) 
     {
         char c = e.getKeyChar();
-        rooms.get(currentRoom).onKey(c, player);
+
     }
     
     public void keyPressed(KeyEvent e)

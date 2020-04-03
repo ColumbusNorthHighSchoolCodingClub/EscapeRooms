@@ -3,6 +3,8 @@ package items;
 import animation.ArcadeDemo;
 import gameObjects.Item;
 import gameObjects.Player;
+import gameObjects.Room;
+import gameObjects.WallRoom;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -15,24 +17,24 @@ import java.awt.image.ImageObserver;
  *
  * @author spockm
  */
-public class Key extends Item
+public class Clue extends Item
 {
-    
-    public Key(Point loc)
+    String text;
+    Point location;
+    public Clue(Point loc,String str)
     {
-        super("Key", new Rectangle(loc.x, loc.y, 30, 30),keyImage);
-        enablePickUpOnClick();
+        super("Clue", new Rectangle(loc.x, loc.y, 28, 32),clueImage);
+        text=str;
+        location = loc;
     }
         
     public void draw(Graphics g, ImageObserver io)
     {
-//        g.setColor(Color.YELLOW);
-//        g.fillRect(getRect().x, getRect().y, getRect().width, getRect().height);
-        g.drawImage(keyImage, getRect().x, getRect().y, io);
+        g.drawImage(getImage(), getRect().x, getRect().y, io);
     }
     public void reactToClick(Point p, Player player)
     {
-       
+        ArcadeDemo.textBox.openBox(text, true);
     }
     
 }

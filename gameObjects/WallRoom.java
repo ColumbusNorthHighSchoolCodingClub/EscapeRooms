@@ -18,26 +18,39 @@ import java.util.Arrays;
  * 
  * @author spockm
  */
-public class Room 
+public class WallRoom extends Room
 {
     private int pointValue;
-    private ArrayList<Item> items;
+    private Room[] walls;
+    public int activeWall;
+    public int numWalls;
     
-    public Room()
+    public WallRoom(int numWalls)
     {
-        items = new ArrayList<Item>();
+        activeWall=0;
         pointValue = 100;
+        walls = new Room[numWalls];
+        this.numWalls=numWalls;
+        for(int i=0;i<walls.length;i++) {
+            walls[i] = new Room();
+            if(numWalls>1) {
+                walls[i].addItem(new RightArrow(this));
+                walls[i].addItem(new LeftArrow(this));
+            }
+        }
         
     }
-
-    public void addItem(Item i) { items.add(i); }
-    public ArrayList<Item> getItems() { return items; }
+    public Room getActiveWall() {return walls[activeWall];}
+    public int getPointValue() { return pointValue; }
+    public void addItem(Item i,int wallNum) { walls[wallNum].addItem(i); }
+    public void addItem(Item i) {addItem(i,activeWall);}
+    public ArrayList<Item> getItems(int wallNum) { return walls[wallNum].getItems(); }
 
     public void onClick(Point p, Player player)
     {
-        for(int index=0; index<getItems().size(); index++)
+        for(int index=0; index<getActiveWall().getItems().size(); index++)
         {
-            Item i = getItems().get(index);
+            Item i = getActiveWall().getItems().get(index);
         
             if(i.getHitBox().contains(p))
             {
@@ -45,8 +58,8 @@ public class Room
                 if(i.pickUpOnClick()&&player.getNumItems()<5)
                 {
                     ArcadeDemo.textBox.openBox("You picked up a " + i.getName() +".", true);
-                    player.addItem(i);   //TODO test this!!
-                    items.remove(index);
+                    player.addItem(i);
+                    getActiveWall().getItems().remove(i);
                 }
             }
         }
@@ -66,16 +79,18 @@ public class Room
     {
         
         g.drawImage(backgroundImage, 0, 0, io);
-        for(Item i :getItems())
+        for(Item i : walls[activeWall].getItems())
             i.draw(g,io);
     }
        
     public Item getItemByName(String s)
     {
-        for (Item i : getItems())
-        {
-            if(i.getName().equals(s))
-                return i;
+        for(Room w:walls) {
+            for (Item i : w.getItems())
+            {
+                if(i.getName().equals(s))
+                    return i;
+            }
         }
         return null;
     }

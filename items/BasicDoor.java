@@ -14,11 +14,12 @@ import java.awt.image.ImageObserver;
  */
 public class BasicDoor extends Item
 {
-    private boolean isOpen = false;
+    boolean isOpen = false;
     
     public BasicDoor()
     {
-        super("BasicDoor", new Rectangle(300,250,100,230));
+        
+        super("BasicDoor", new Rectangle(310-70,440-275,140,275),null);
     }
     
     public boolean isOpen() { return isOpen; }
@@ -33,8 +34,10 @@ public class BasicDoor extends Item
     {
         if(!isOpen)
         {
-            g.setColor(Color.CYAN);
-            super.draw(g,io);
+            g.drawImage(doorClosedImage, getRect().x, getRect().y, io);
+            //super.draw(g,io);
+        } else {
+            g.drawImage(doorOpenImage, getRect().x, getRect().y, io);
         }
     }
 }
