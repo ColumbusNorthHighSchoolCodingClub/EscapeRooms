@@ -2,11 +2,9 @@ package items;
 
 import gameObjects.Item;
 import gameObjects.Player;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.image.ImageObserver;
 
 /**
  *
@@ -14,11 +12,11 @@ import java.awt.image.ImageObserver;
  */
 public class BasicDoor extends Item
 {
-    private boolean isOpen = false;
+    boolean isOpen = false;
     
     public BasicDoor()
     {
-        super("BasicDoor", new Rectangle(300,250,100,230));
+        super("BasicDoor", new Rectangle(300,300,200,300));
     }
     
     public boolean isOpen() { return isOpen; }
@@ -29,12 +27,9 @@ public class BasicDoor extends Item
         System.out.println("Basic Door Clicked!");
     }
     
-    public void draw(Graphics g, ImageObserver io)
+    public void draw(Graphics g)
     {
         if(!isOpen)
-        {
-            g.setColor(Color.CYAN);
-            super.draw(g,io);
-        }
+            super.draw(g);
     }
 }

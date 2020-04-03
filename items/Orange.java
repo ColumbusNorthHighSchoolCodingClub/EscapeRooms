@@ -1,39 +1,35 @@
 package items;
 
-import gameObjects.Item;
-import gameObjects.Player;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-/**
- *
- * @author spockm
- */
-public class SimpleButton extends Item
-{
-    boolean isOn = false;
-    
-    public SimpleButton()
-    {
-        super("SimpleButton", new Rectangle(500,200,20,20));
-    }
-    
+import gameObjects.Item;
+import gameObjects.Player;
+
+public class Orange extends Item {
+	private boolean isOn=true;
+	
+	public Orange(String n, String text, Point loc ) {
+		super(n, new Rectangle(loc.x, loc.y, 20,20));
+	}
     public boolean isOn() { return isOn; }
-    
     public void reactToClick(Point p, Player player)
     {
         isOn = !isOn;
-        System.out.println("SimpleButton Clicked!");
+        System.out.println("NamedButton Clicked!");
     }
     
     public void draw(Graphics g)
     {
         if(isOn)
-            g.setColor(Color.GREEN);
+            g.setColor(Color.BLACK);
         else
-            g.setColor(Color.RED);
+            g.setColor(Color.ORANGE);
         g.fillRect(getRect().x, getRect().y, getRect().width, getRect().height);
     }
+	
+	
+
 }
