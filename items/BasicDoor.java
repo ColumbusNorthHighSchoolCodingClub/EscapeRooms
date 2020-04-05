@@ -14,11 +14,11 @@ import java.awt.image.ImageObserver;
  */
 public class BasicDoor extends Item
 {
-    private boolean isOpen = false;
+    boolean isOpen = false;
     
     public BasicDoor()
     {
-        super("BasicDoor", new Rectangle(300,250,100,230));
+        super("BasicDoor", new Rectangle(300,300,200,300));
     }
     
     public boolean isOpen() { return isOpen; }
