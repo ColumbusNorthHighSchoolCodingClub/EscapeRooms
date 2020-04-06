@@ -55,6 +55,7 @@ public class RoomEditor {
     }
 
     private void initializeItems() {
+        System.out.println("Once you have placed the items, press p to print their coordinates - given as x,y");
         items.add(new BasicDoor());
         items.add(new CombinationSafe());
         //items.add(new KamiPuzzle());
@@ -112,6 +113,12 @@ public class RoomEditor {
             }
         }
         return g;
+    }
+    
+    public void printLoc(){
+        for(int counter = 0; counter < placed.size(); counter++){
+            System.out.println(placed.get(counter).getName() + " is at " + placed.get(counter).getRect().x + ", " + placed.get(counter).getRect().y);
+        }
     }
 
     public void click() {
