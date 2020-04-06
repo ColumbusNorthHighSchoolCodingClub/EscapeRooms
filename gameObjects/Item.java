@@ -62,6 +62,10 @@ public class Item
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
     }
     
+    public void set(int x, int y){
+        rect = new Rectangle(x,y, rect.width, rect.height);
+    }
+    
     //Make these static so that the Image only gets loaded once (not for each instance)
     public static Image keyImage;
     public static void loadImages(Toolkit toolkit)
