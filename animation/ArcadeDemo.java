@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * 
  * Adapted from the AppletAE demo from years past. 
  */
-
+import javax.swing.JOptionPane;
 import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
@@ -64,7 +64,7 @@ public class ArcadeDemo extends AnimationPanel
     private boolean started = false;
     private int totalTime;
     private int roomTime;
-
+    private String cheatSequence = "";
     //Constructor
     //-------------------------------------------------------
     public ArcadeDemo()
@@ -201,11 +201,41 @@ public class ArcadeDemo extends AnimationPanel
     //-------------------------------------------------------
     //Respond to Keyboard Events
     //-------------------------------------------------------
-    public void keyTyped(KeyEvent e) 
-    {
-        char c = e.getKeyChar();
-        rooms.get(currentRoom).onKey(c, player);
-    }
+
+	public void keyTyped(KeyEvent e) {
+		
+		char c = e.getKeyChar();
+
+		if (c == 'b')
+			cheatSequence = "b"; // Restart the sequence when b is typed.
+		else
+			cheatSequence += c;
+
+		if (cheatSequence.contentEquals("backdoor")) {
+
+			String[] allRoomNames = new String[rooms.size()];
+			for (int i = 0; i<rooms.size(); i++) {
+				allRoomNames[i] = rooms.get(i).getClass().getName();
+			}
+
+			cheatSequence = "";
+			String desiredRoom = (String) JOptionPane.showInputDialog(null, "Please choose a room", "Cheat Menu",
+					JOptionPane.QUESTION_MESSAGE, null,
+					 allRoomNames, rooms.get(currentRoom).getClass().getName() );
+
+			for (int i = 0; i < rooms.size(); i++) {
+				if (rooms.get(i).getClass().getName().equals(desiredRoom)) {
+					currentRoom = i;
+					return;
+
+				}
+
+			}
+
+		}
+
+		rooms.get(currentRoom).onKey(c, player);
+	}
     
     public void keyPressed(KeyEvent e)
     {
