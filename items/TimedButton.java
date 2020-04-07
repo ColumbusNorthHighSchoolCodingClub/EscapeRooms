@@ -12,13 +12,14 @@ import java.awt.image.ImageObserver;
  *
  * @author spockm
  */
-public class SimpleButtonBordered extends Item
+public class TimedButton extends Item
 {
-    boolean isOn = false;
+    private boolean isOn = false;
+    private int timer = 0;
     
-    public SimpleButtonBordered()
+    public TimedButton()
     {
-        super("SimpleButton", new Rectangle(500,200,20,20));
+        super("TimedButton", new Rectangle(500,200,20,20));
     }
     
     public boolean isOn() { return isOn; }
@@ -26,15 +27,19 @@ public class SimpleButtonBordered extends Item
     public void reactToClick(Point p, Player player)
     {
         isOn = !isOn;
-        System.out.println("SimpleButton Clicked!" + "(" + p.x + "," + p.y + ")");
+        timer = 120;
+        System.out.println("TimedButton Clicked!");
     }
     
     public void draw(Graphics g, ImageObserver io)
     {
-        g.setColor(Color.BLACK);
-        g.fillRect(getRect().x-4,getRect().y-4,28,28);
+        
         if(isOn)
+        {
             g.setColor(Color.GREEN);
+            if(timer==0) isOn=false;
+            else timer--;
+        }
         else
             g.setColor(Color.RED);
         g.fillRect(getRect().x, getRect().y, getRect().width, getRect().height);

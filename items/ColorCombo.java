@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
 /**
@@ -77,7 +78,7 @@ public class ColorCombo extends Item {
     }
 
     //draw methods
-    public void draw(Graphics g) {
+    public void draw(Graphics g, ImageObserver io) {
         int sqSize = (size / 2) - 2;
 
         //outline

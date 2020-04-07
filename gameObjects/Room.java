@@ -17,6 +17,8 @@ public class Room
 {
     private int pointValue;
     private ArrayList<Item> items;
+    public int mouseX;
+    public int mouseY;
     
     public Room()
     {
@@ -66,6 +68,10 @@ public class Room
             Item i = items.get(index);
                 i.reactToMouseRelease(p,player);
         }
+    }
+    public void updateMouseCoords(int x, int y) {
+        mouseX = x;
+        mouseY = y;
     }
     
     public void onKey(char c, Player player)

@@ -21,14 +21,29 @@ import java.util.ArrayList;
 import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
+import gameObjects.TextBox;
+import rooms.CandleRoom;
+import rooms.ColorButtonRoom;
+import rooms.ColorRoom;
+import rooms.CustomRoom;
 import rooms.KamiRoomOne;
 import rooms.MultiButtonRoom;
+import rooms.RainbowRoom;
 import rooms.RoomOne;
-import rooms.RoomThree;
+import rooms.RoomSearch;
+import rooms.RushHourRoom;
 //import rooms.RoomThree;
-import rooms.RoomTwo;
+import rooms.MazeRoom;
+import rooms.MysteryDoorRoom;
+import rooms.RoomLetters;
+import rooms.RoomWithDrawer;
+import rooms.RoomWithRandomHiddenButton;
 import rooms.RoomWithStuff;
 import rooms.RoomZero;
+import rooms.SafeRoom;
+import rooms.TimedButtonRoom;
+import rooms.initialRoom;
+import rooms.lightswitchRoom;
 
 
 public class ArcadeDemo extends AnimationPanel 
@@ -42,9 +57,11 @@ public class ArcadeDemo extends AnimationPanel
     private Player player; 
     private ArrayList<Room> rooms;
     private int currentRoom; 
+    public static TextBox textBox;
     
     private boolean waitMode;
     private int waitBeforeNextRoomTimer;
+    private boolean started = false;
     private int totalTime;
     private int roomTime;
 
@@ -62,70 +79,97 @@ public class ArcadeDemo extends AnimationPanel
         waitBeforeNextRoomTimer = 0;
         totalTime=0;
         roomTime=0;
+        textBox=new TextBox();
     }
     
     public void addRoomsToList()
     {
-    	rooms.add(new KamiRoomOne());
-    	rooms.add(new RoomThree());
-        rooms.add(new RoomTwo());
+        rooms.add(new initialRoom());
+        rooms.add(new MysteryDoorRoom()); 
+        rooms.add(new ColorButtonRoom());
+        rooms.add(new CandleRoom()); 
+        rooms.add(new RoomWithDrawer());
+        rooms.add(new lightswitchRoom());    	
+        rooms.add(new RainbowRoom());
+    	rooms.add(new TimedButtonRoom());
+    	rooms.add(new RoomSearch());
+    	rooms.add(new RushHourRoom());
+        rooms.add(new MazeRoom());
         rooms.add(new RoomZero());
         rooms.add(new MultiButtonRoom());
-        rooms.add(new MultiButtonRoom());
         rooms.add(new RoomWithStuff());
-        rooms.add(new RoomOne());
-        
+    	rooms.add(new KamiRoomOne());
+        rooms.add(new CustomRoom()); //good, not easy
+        rooms.add(new RoomLetters());
+        rooms.add(new RoomWithRandomHiddenButton()); //DIFFICULT!
+        rooms.add(new ColorRoom());  //can't get to work
+        rooms.add(new RoomOne());        
+        rooms.add(new SafeRoom());  //Crashes
     }
        
     //The renderFrame method is the one which is called each time a frame is drawn.
     //-------------------------------------------------------
     protected Graphics renderFrame(Graphics g) 
     {
-        //Draw a square that is stationary on the screen.
-       // g.setColor(Color.BLUE);
-        //g.fillRect(220,120,50,50);
-        
-        //Draw a circle that follows the mouse.
-        g.setColor(Color.BLACK);
-        g.fillOval(mouseX-10, mouseY-10, 20,20);
-        
-        rooms.get(currentRoom).draw(g,this);
-        
-        if (rooms.get(currentRoom).isDone() && !waitMode) 
-        {   
-            waitMode = true;
-            waitBeforeNextRoomTimer = 200;
-        }
-        if(waitMode)
-        {
-            if(waitBeforeNextRoomTimer > 0)
-            {
-                waitBeforeNextRoomTimer--;
-                g.drawString("You Have Escaped!", 250, 150);
-            }
-            else
-            {
-                waitMode = false;
-                if(currentRoom < rooms.size()-1)
+        if (started == false) {
+                g.drawImage(startingScreen, 0, -10, null);
+                if(rooms.get(currentRoom).isDone())
                 {
-                    currentRoom++;
-                    roomTime=0;
+                        started = true;
+                        currentRoom++;
+                }
+        } else {
+        
+            //Draw a circle that follows the mouse.
+            g.setColor(Color.BLACK);
+            g.fillOval(mouseX-10, mouseY-10, 20,20);
+
+            rooms.get(currentRoom).draw(g,this);
+            rooms.get(currentRoom).updateMouseCoords(mouseX, mouseY);
+
+            if (rooms.get(currentRoom).isDone() && !waitMode) 
+            {   
+                waitMode = true;
+                waitBeforeNextRoomTimer = 200;
+            }
+            if(waitMode)
+            {
+                if(waitBeforeNextRoomTimer > 0)
+                {
+                    waitBeforeNextRoomTimer--;
+                    g.drawImage(congrats ,0,-10,null);     
                 }
                 else
-                    System.out.println("You Have Escaped ALL the rooms!");
+                {
+                    textBox.closeBox();
+                    waitMode = false;
+                    if(currentRoom < rooms.size()-1)
+                    {
+                        currentRoom++;
+                        roomTime=0;
+                    }
+                    else
+                    {
+                        textBox.openBox("You Have Escaped ALL the rooms!",false);
+                        System.out.println("You Have Escaped ALL the rooms!");
+                    }
+                }
+
             }
-            
+            textBox.draw(g, this);
+            player.drawInventory(g, this);
+
+            //General Text (Draw this last to make sure it's on top.)
+            g.setColor(Color.BLACK);
+            g.drawString("CurrentRoom = "+currentRoom, 10, 12);
+            g.drawString("f#"+frameNumber, 150, 12);
+            g.drawString("Total Time: "+totalTime/60, 500, 80);
+            g.drawString("Room Time: "+roomTime/60, 500, 100);
+            roomTime++;
+            totalTime++;
         }
-        
-        //General Text (Draw this last to make sure it's on top.)
-        g.setColor(Color.BLACK);
-        g.drawString("CurrentRoom = "+currentRoom, 10, 12);
-        g.drawString("f#"+frameNumber, 150, 12);
-        g.drawString("Total Time: "+totalTime/60, 500, 20);
-        g.drawString("Room Time: "+roomTime/60, 500, 32);
-        roomTime++;
-        totalTime++;
         return g;
+
     }//--end of renderFrame method--
     
     //-------------------------------------------------------
@@ -134,8 +178,12 @@ public class ArcadeDemo extends AnimationPanel
     public void mouseClicked(MouseEvent e)  
     { 
         Point clickPoint = e.getPoint();
-        rooms.get(currentRoom).onClick(clickPoint, player);
-        rooms.get(currentRoom).onClickGeneric(clickPoint, player);
+        if(textBox.shouldClose()&&textBox.isOpen()) {
+            textBox.closeBox();
+        } else {        
+            rooms.get(currentRoom).onClick(clickPoint, player);
+            rooms.get(currentRoom).onClickGeneric(clickPoint, player);
+        }
     }
     public void mouseDragged(MouseEvent e) 
     {
@@ -184,12 +232,16 @@ public class ArcadeDemo extends AnimationPanel
 //-----------------------------------------------------------------------*/
     Image ballImage;        
     Image starImage;
+    Image startingScreen;
+    Image congrats;
     
     public void initGraphics() 
     {      
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         
         Item.loadImages(toolkit);
+        startingScreen = toolkit.getImage("src/items/images/escape.png");
+        congrats = toolkit.getImage("src/items/images/congrats.jpg");
 //        ballImage = toolkit.getImage("ball.gif");
 //        starImage = toolkit.getImage("star.gif");
     } //--end of initGraphics()--
