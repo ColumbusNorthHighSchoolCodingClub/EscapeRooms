@@ -11,8 +11,7 @@ import items.Paper;
  *   
  *   
  * @author dlpre
- *
- **/
+ */
 public class SafeRoom extends Room
 {
     public SafeRoom()
