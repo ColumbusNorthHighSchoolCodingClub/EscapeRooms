@@ -22,28 +22,7 @@ import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
 import gameObjects.TextBox;
-import rooms.CandleRoom;
-import rooms.ColorButtonRoom;
-import rooms.ColorRoom;
-import rooms.CustomRoom;
-import rooms.KamiRoomOne;
-import rooms.MultiButtonRoom;
-import rooms.RainbowRoom;
-import rooms.RoomOne;
-import rooms.RoomSearch;
-import rooms.RushHourRoom;
-//import rooms.RoomThree;
-import rooms.MazeRoom;
-import rooms.MysteryDoorRoom;
-import rooms.RoomLetters;
-import rooms.RoomWithDrawer;
-import rooms.RoomWithRandomHiddenButton;
-import rooms.RoomWithStuff;
-import rooms.RoomZero;
-import rooms.SafeRoom;
-import rooms.TimedButtonRoom;
-import rooms.initialRoom;
-import rooms.lightswitchRoom;
+import rooms.*;
 
 
 public class ArcadeDemo extends AnimationPanel 
@@ -85,6 +64,7 @@ public class ArcadeDemo extends AnimationPanel
     public void addRoomsToList()
     {
         rooms.add(new initialRoom());
+        rooms.add(new RoomSpotlight());
         rooms.add(new MysteryDoorRoom()); 
         rooms.add(new ColorButtonRoom());
         rooms.add(new CandleRoom()); 
@@ -98,7 +78,7 @@ public class ArcadeDemo extends AnimationPanel
         rooms.add(new RoomZero());
         rooms.add(new MultiButtonRoom());
         rooms.add(new RoomWithStuff());
-    	rooms.add(new KamiRoomOne());
+    	//rooms.add(new KamiRoomOne());
         rooms.add(new CustomRoom()); //good, not easy
         rooms.add(new RoomLetters());
         rooms.add(new RoomWithRandomHiddenButton()); //DIFFICULT!
@@ -131,13 +111,19 @@ public class ArcadeDemo extends AnimationPanel
             {   
                 waitMode = true;
                 waitBeforeNextRoomTimer = 200;
+                
+                
+                victorySound.play();
+                
+                
+                
             }
             if(waitMode)
             {
                 if(waitBeforeNextRoomTimer > 0)
                 {
                     waitBeforeNextRoomTimer--;
-                    g.drawImage(congrats ,0,-10,null);     
+                    g.drawImage(congrats ,0,-10,null);
                 }
                 else
                 {
@@ -287,11 +273,11 @@ public class ArcadeDemo extends AnimationPanel
  *  3.  Add a line into the initMusic() function to load the clip. 
  *  4.  Use the play(), stop() and loop() functions as needed in your code.
 //-----------------------------------------------------------------------*/
-    AudioClip themeMusic;
-    AudioClip bellSound;
+    AudioClip victorySound;
     
-    public void initMusic() 
+    public void initMusic()
     {
+        victorySound = loadClip("src/sounds/victory.wav");
     }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
