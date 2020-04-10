@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * Adapted from the AppletAE demo from years past. 
  */
 import javax.swing.JOptionPane;
+
 import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
@@ -27,19 +28,20 @@ import rooms.ColorButtonRoom;
 import rooms.ColorRoom;
 import rooms.CustomRoom;
 import rooms.KamiRoomOne;
-import rooms.MultiButtonRoom;
-import rooms.RainbowRoom;
-import rooms.RoomOne;
-import rooms.RoomSearch;
-import rooms.RushHourRoom;
+import rooms.KindaChessRoom;
 //import rooms.RoomThree;
 import rooms.MazeRoom;
+import rooms.MultiButtonRoom;
 import rooms.MysteryDoorRoom;
+import rooms.RainbowRoom;
 import rooms.RoomLetters;
+import rooms.RoomOne;
+import rooms.RoomSearch;
 import rooms.RoomWithDrawer;
 import rooms.RoomWithRandomHiddenButton;
 import rooms.RoomWithStuff;
 import rooms.RoomZero;
+import rooms.RushHourRoom;
 import rooms.SafeRoom;
 import rooms.TimedButtonRoom;
 import rooms.initialRoom;
@@ -85,6 +87,7 @@ public class ArcadeDemo extends AnimationPanel
     public void addRoomsToList()
     {
         rooms.add(new initialRoom());
+        rooms.add(new KindaChessRoom());
         rooms.add(new MysteryDoorRoom()); 
         rooms.add(new ColorButtonRoom());
         rooms.add(new CandleRoom()); 
@@ -215,16 +218,20 @@ public class ArcadeDemo extends AnimationPanel
 
 			String[] allRoomNames = new String[rooms.size()];
 			for (int i = 0; i<rooms.size(); i++) {
-				allRoomNames[i] = rooms.get(i).getClass().getName();
+				String a = rooms.get(i).getClass().getName().replace("rooms.", "");
+				allRoomNames[i] = a;
 			}
 
 			cheatSequence = "";
+			
+			String thisRoom = rooms.get(currentRoom).getClass().getName().replace("rooms.", "");
+			
 			String desiredRoom = (String) JOptionPane.showInputDialog(null, "Please choose a room", "Cheat Menu",
 					JOptionPane.QUESTION_MESSAGE, null,
-					 allRoomNames, rooms.get(currentRoom).getClass().getName() );
+					 allRoomNames,thisRoom  );
 
 			for (int i = 0; i < rooms.size(); i++) {
-				if (rooms.get(i).getClass().getName().equals(desiredRoom)) {
+				if (rooms.get(i).getClass().getName().equals("rooms." + desiredRoom)) {
 					currentRoom = i;
 					return;
 
