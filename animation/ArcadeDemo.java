@@ -120,6 +120,7 @@ public class ArcadeDemo extends AnimationPanel
                 {
                         started = true;
                         currentRoom++;
+						startMusic();
                 }
         } else {
         
@@ -134,6 +135,8 @@ public class ArcadeDemo extends AnimationPanel
             {   
                 waitMode = true;
                 waitBeforeNextRoomTimer = 200;
+				stopMusic();
+                victorySound.play();
             }
             if(waitMode)
             {
@@ -150,6 +153,7 @@ public class ArcadeDemo extends AnimationPanel
                     {
                         currentRoom++;
                         roomTime=0;
+						startMusic();
                     }
                     else
                     {
@@ -294,13 +298,43 @@ public class ArcadeDemo extends AnimationPanel
  *  3.  Add a line into the initMusic() function to load the clip. 
  *  4.  Use the play(), stop() and loop() functions as needed in your code.
 //-----------------------------------------------------------------------*/
-    AudioClip themeMusic;
-    AudioClip bellSound;
+    AudioClip song1;
+    AudioClip song2;
+    AudioClip victorySound;
     
-    public void initMusic() 
+    
+    public void initMusic()
     {
+        song1 = loadClip("src/sounds/song1.wav");
+        song2 = loadClip("src/sounds/song2.wav");
+        victorySound = loadClip("src/sounds/victory.wav");
     }
-
+    
+    
+    // Begin playing the song for the current room
+    public void startMusic()
+    {
+        int songNo = rooms.get(currentRoom).getSong();
+        if (songNo == 1)
+            song1.loop();
+        else if (songNo == 2)
+            song2.loop();
+        else
+            song1.loop();
+    }
+    
+    
+    // Stop playing the current song
+    public void stopMusic()
+    {
+        int songNo = rooms.get(currentRoom).getSong();
+        if (songNo == 1)
+            song1.stop();
+        else if (songNo == 2)
+            song2.stop();
+        else
+            song1.stop();
+    }
+    
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }//--end of ArcadeDemo class--
-
