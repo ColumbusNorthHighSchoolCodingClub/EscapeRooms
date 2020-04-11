@@ -92,6 +92,12 @@ public class Room
     {
         return "Click on the door";
     }
+	
+	// Override this method to change which song plays in the room
+    public int getSong()
+    {
+        return 1;
+    }
     
     public void draw(Graphics g, ImageObserver io)
     {
