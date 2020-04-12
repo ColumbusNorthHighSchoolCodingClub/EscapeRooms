@@ -87,7 +87,6 @@ public class ArcadeDemo extends AnimationPanel
     public void addRoomsToList()
     {
         rooms.add(new initialRoom());
-        rooms.add(new KindaChessRoom());
         rooms.add(new MysteryDoorRoom()); 
         rooms.add(new ColorButtonRoom());
         rooms.add(new CandleRoom()); 
@@ -97,6 +96,7 @@ public class ArcadeDemo extends AnimationPanel
     	rooms.add(new TimedButtonRoom());
     	rooms.add(new RoomSearch());
     	rooms.add(new RushHourRoom());
+        rooms.add(new KindaChessRoom());
         rooms.add(new MazeRoom());
         rooms.add(new RoomZero());
         rooms.add(new MultiButtonRoom());
