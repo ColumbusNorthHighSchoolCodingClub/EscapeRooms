@@ -51,9 +51,6 @@ public class ColorRoom extends Room {
         addItem(new Slider(new Point(sliderStartX + sliderGap, sliderY), 5, 100, 20, Color.green));
         //blue slider
         addItem(new Slider(new Point(sliderStartX + 2 * sliderGap, sliderY), 5, 100, 20, Color.cyan));
-
-        //color circles
-        //addItem(new ColorCircle(new Point(100, 150), goalColor));
     }
 
     public Color makeRandomColor() {
@@ -74,8 +71,6 @@ public class ColorRoom extends Room {
             getItems().get(i).updateMouseCoords(mouseX, mouseY);
             intensities[i] = ((Slider) getItems().get(i)).getIntensity();
         }
-        //((ColorCircle) getItems().get(3)).draw(g, io, intensities);
-
         drawCircles(g, io);
     }
 

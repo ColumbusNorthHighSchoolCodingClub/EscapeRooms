@@ -1,7 +1,7 @@
 package rooms;
 
 import gameObjects.Room;
-import items.BasicDoor;
+import items.BasicDoor; 
 import items.KamiPuzzle;
 import util.KamiPuzzleBuilder;
 import util.Triangle;
