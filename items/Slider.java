@@ -6,6 +6,7 @@
 package items;
 
 import gameObjects.Item;
+import gameObjects.Player;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -24,7 +25,6 @@ public class Slider extends Item {
     private int diameter;
     private int rectWidth;
     private int rectHeight;
-    private Color c;
     private boolean moving;
     private int maxHeight;
     private int minHeight;
@@ -42,17 +42,23 @@ public class Slider extends Item {
         maxHeight = y + rectHeight - diameter + diameter / 2;//adjusted for shift of circle
     }
 
-    public void reactToMousePress(Point p) {
-        moving = true;
+    public void reactToDrag(Point p, Player player) {
+        if (getHitBox().contains(p)) {
+            moving = true;
+        }
     }
 
-    public void reactToMouseRelease(Point p) {
-        moving = false;
-        setRect(new Rectangle(x, slideY, diameter, diameter));
+    public void reactToMouseRelease(Point p, Player player) {
+        //System.out.println("yay");
+
+        if (moving) {
+            moving = false;
+            setRect(new Rectangle(x, slideY, diameter, diameter));
+        }
     }
 
     public double getIntensity() {
-        return (double)(maxHeight - slideY) /(double) (maxHeight-minHeight);
+        return (double) (maxHeight - slideY) / (double) (maxHeight - minHeight);
     }
 
     public void draw(Graphics g, ImageObserver io) {
@@ -61,11 +67,13 @@ public class Slider extends Item {
         g.setColor(Color.gray);
         g.fillRect(x, y, rectWidth, rectHeight);
         drawCircle(g, io);
+        //System.out.println(moving + "         " + x);
     }
 
     public void drawCircle(Graphics g, ImageObserver io) {
         g.setColor(Color.black);
         int drawY;
+        //System.out.println(mouseY);
         if (moving) {
             drawY = mouseY;
         } else {

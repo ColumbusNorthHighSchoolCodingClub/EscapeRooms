@@ -22,9 +22,11 @@ import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Room;
 import gameObjects.TextBox;
+import rooms.ButtonsInOrder;
 import rooms.CandleRoom;
 import rooms.ColorButtonRoom;
 import rooms.ColorRoom;
+import rooms.CompassRoom;
 import rooms.CustomRoom;
 import rooms.KamiRoomOne;
 import rooms.MultiButtonRoom;
@@ -35,12 +37,15 @@ import rooms.RushHourRoom;
 //import rooms.RoomThree;
 import rooms.MazeRoom;
 import rooms.MysteryDoorRoom;
+import rooms.RohitRoom;
 import rooms.RoomLetters;
+import rooms.RoomSpotlight;
 import rooms.RoomWithDrawer;
 import rooms.RoomWithRandomHiddenButton;
 import rooms.RoomWithStuff;
 import rooms.RoomZero;
 import rooms.SafeRoom;
+import rooms.TargetRoom;
 import rooms.TimedButtonRoom;
 import rooms.initialRoom;
 import rooms.lightswitchRoom;
@@ -85,6 +90,12 @@ public class ArcadeDemo extends AnimationPanel
     public void addRoomsToList()
     {
         rooms.add(new initialRoom());
+        rooms.add(new TargetRoom());  
+        rooms.add(new CompassRoom());  
+        rooms.add(new RoomSpotlight());  
+        rooms.add(new RohitRoom());  
+        rooms.add(new ButtonsInOrder());  
+        rooms.add(new ColorRoom());  
         rooms.add(new MysteryDoorRoom()); 
         rooms.add(new ColorButtonRoom());
         rooms.add(new CandleRoom()); 
@@ -99,12 +110,11 @@ public class ArcadeDemo extends AnimationPanel
         rooms.add(new MultiButtonRoom());
         rooms.add(new RoomWithStuff());
     	rooms.add(new KamiRoomOne());
-        rooms.add(new CustomRoom()); //good, not easy
-        rooms.add(new RoomLetters());
-        rooms.add(new RoomWithRandomHiddenButton()); //DIFFICULT!
-        rooms.add(new ColorRoom());  //can't get to work
         rooms.add(new RoomOne());        
-        rooms.add(new SafeRoom());  //Crashes
+        rooms.add(new CustomRoom()); 
+        rooms.add(new RoomLetters()); //Uses termial window
+        rooms.add(new RoomWithRandomHiddenButton()); //DIFFICULT!
+        rooms.add(new SafeRoom());  //Uses terminal window
     }
        
     //The renderFrame method is the one which is called each time a frame is drawn.
@@ -131,6 +141,7 @@ public class ArcadeDemo extends AnimationPanel
             {   
                 waitMode = true;
                 waitBeforeNextRoomTimer = 200;
+                victorySound.play();
             }
             if(waitMode)
             {
@@ -187,6 +198,7 @@ public class ArcadeDemo extends AnimationPanel
     }
     public void mouseDragged(MouseEvent e) 
     {
+        super.mouseDragged(e);
     	Point clickPoint = e.getPoint();
         rooms.get(currentRoom).onDrag(clickPoint, player);
     	
@@ -287,11 +299,11 @@ public class ArcadeDemo extends AnimationPanel
  *  3.  Add a line into the initMusic() function to load the clip. 
  *  4.  Use the play(), stop() and loop() functions as needed in your code.
 //-----------------------------------------------------------------------*/
-    AudioClip themeMusic;
-    AudioClip bellSound;
+    AudioClip victorySound;
     
-    public void initMusic() 
+    public void initMusic()
     {
+        victorySound = loadClip("src/sounds/victory.wav");
     }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
