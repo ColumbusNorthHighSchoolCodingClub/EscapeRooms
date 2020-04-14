@@ -106,10 +106,21 @@ public class Item
     public static Image OImage; 
     public static Image UImage; 
     public static Image candleImage;
+
     public static Image stageImage;
     public static Image actorImage;
     public static Image actorFlippedImage;
     public static Image targetImage;
+
+    public static Image redFootSoldierImage;
+    public static Image blueFootSoldierImage;
+    public static Image redElephantImage;
+    public static Image blueElephantImage;
+    public static Image redChariotImage;
+    public static Image blueChariotImage;
+    public static Image redKeyImage;
+    public static Image blueKeyImage;
+
 
     public static void loadImages(Toolkit toolkit)
     {
@@ -133,10 +144,19 @@ public class Item
         OImage = toolkit.getImage("src/items/images/O.gif");
         UImage = toolkit.getImage("src/items/images/U.gif");
         candleImage = toolkit.getImage("src/items/images/candle.gif");
+
         stageImage = toolkit.getImage("src/items/images/stage.png");
         actorImage = toolkit.getImage("src/items/images/actor.gif");
         actorFlippedImage = toolkit.getImage("src/items/images/actor_flipped.gif");
         targetImage = toolkit.getImage("src/items/images/target.png");
+        redFootSoldierImage = toolkit.getImage("src/items/images/footSoldier.gif");
+        blueFootSoldierImage = toolkit.getImage("src/items/images/footSoldierE.gif");
+        redElephantImage = toolkit.getImage("src/items/images/elephant.gif");
+        blueElephantImage = toolkit.getImage("src/items/images/elephantE.gif");
+        redChariotImage = toolkit.getImage("src/items/images/chariot.gif");
+        blueChariotImage = toolkit.getImage("src/items/images/chariotE.gif");
+        redKeyImage = toolkit.getImage("src/items/images/RedKey.gif");
+        blueKeyImage = toolkit.getImage("src/items/images/BlueKey.gif");
     }
     public void reactToKey(char c, Player player) {
        System.out.println("A key was pressed, but the Item has not overriden the reactToKey method");
